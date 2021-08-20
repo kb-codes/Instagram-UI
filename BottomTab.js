@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, Image } from "react-native";
+import { Image } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import Home from "./Home";
@@ -30,7 +30,7 @@ export default class BottomTab extends Component {
               ),
             }}
           />
-          <Tab.Screen
+         <Tab.Screen
             name="Search"
             component={Home}
             options={{
@@ -42,6 +42,7 @@ export default class BottomTab extends Component {
               ),
             }}
           />
+          
           <Tab.Screen
             name="Reels"
             component={Home}
@@ -54,6 +55,7 @@ export default class BottomTab extends Component {
               ),
             }}
           />
+           
           <Tab.Screen
             name="Heart"
             component={Home}
@@ -66,6 +68,7 @@ export default class BottomTab extends Component {
               ),
             }}
           />
+         
           <Tab.Screen
             name="Profile"
             component={Home}

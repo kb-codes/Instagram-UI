@@ -12,12 +12,58 @@ import {
   Dimensions,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import storyData from "./storyData";
 
 const width = Dimensions.get("window").width;
 
-function Post() {
+const renderPost = ({ item }) => {
   return (
     <View>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          marginHorizontal: 15,
+          paddingVertical: 10,
+        }}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <LinearGradient
+            // Background Linear Gradient
+            colors={["#E5236C", "#EB9A27"]}
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: 18,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <View
+              style={{
+                width: 34,
+                height: 34,
+                borderRadius: 17,
+                backgroundColor: "white",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Image
+                source={item.profile}
+                style={{ width: 30, height: 30, borderRadius: 15 }}
+              />
+            </View>
+          </LinearGradient>
+          <Text style={{ fontSize: 14, marginLeft: 10 }}>{item.name}</Text>
+        </View>
+
+        <Image
+          source={require("./assets/dots.png")}
+          style={{ width: 3, height: 15 }}
+        />
+      </View>
       <View
         style={{
           marginHorizontal: 15,
@@ -27,9 +73,7 @@ function Post() {
         }}
       >
         <Image
-          source={{
-            uri: "https://picsum.photos/360/360",
-          }}
+          source={item.post}
           style={{
             width: 360,
             height: 360,
@@ -120,42 +164,16 @@ function Post() {
       </View>
     </View>
   );
-}
+};
 
 export default function Home() {
-  const storyData = [
-    {
-      profile: require("./assets/profile.png"),
-      name: "Your Story",
-    },
-    {
-      profile: { uri: "https://i.pravatar.cc/300" },
-      name: "smith_molai",
-    },
-    {
-      profile: { uri: "https://i.pravatar.cc/300" },
-      name: "sophia",
-    },
-    {
-      profile: { uri: "https://i.pravatar.cc/300" },
-      name: "sk_photos",
-    },
-    {
-      profile: { uri: "https://i.pravatar.cc/300" },
-      name: "sk_photos",
-    },
-    {
-      profile: { uri: "https://i.pravatar.cc/300" },
-      name: "sk_photos",
-    },
-  ];
   const renderStory = ({ item }) => {
     return (
       <View
         style={{
           alignItems: "center",
           padding: 5,
-          marginLeft: item.name == "Your Story" ? 15 : 0,
+          marginLeft: item.name == "kuldip_badga" ? 15 : 0,
         }}
       >
         <LinearGradient
@@ -187,12 +205,12 @@ export default function Home() {
         </LinearGradient>
         <Text
           style={{
-            color: item.name == "Your Story" ? "#A9A9A9" : "#292929",
+            color: item.name == "kuldip_badga" ? "#A9A9A9" : "#292929",
             fontSize: 12,
             marginTop: 5,
           }}
         >
-          {item.name}
+          {item.name == "kuldip_badga" ? "Your Story" : item.name}
         </Text>
       </View>
     );
@@ -204,10 +222,10 @@ export default function Home() {
           ...styles.mainWrapper,
           marginTop:
             Platform.OS === "android" ? StatusBar.currentHeight + 5 : 0,
-            paddingVertical:5
+          paddingVertical: 5,
         }}
       >
-        <Image
+       <Image
           source={require("./assets/logo.png")}
           style={{ width: 110, height: 31 }}
         />
@@ -246,58 +264,12 @@ export default function Home() {
         </View>
 
         <View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginHorizontal: 15,
-              paddingVertical: 10,
-            }}
-          >
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <LinearGradient
-                // Background Linear Gradient
-                colors={["#E5236C", "#EB9A27"]}
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 18,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <View
-                  style={{
-                    width: 34,
-                    height: 34,
-                    borderRadius: 17,
-                    backgroundColor: "white",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Image
-                    source={{ uri: "https://i.pravatar.cc/300" }}
-                    style={{ width: 30, height: 30, borderRadius: 15 }}
-                  />
-                </View>
-              </LinearGradient>
-              <Text style={{ fontSize: 14, marginLeft: 10 }}>
-                amelia_windler
-              </Text>
-            </View>
-
-            <Image
-              source={require("./assets/dots.png")}
-              style={{ width: 3, height: 15 }}
-            />
-          </View>
-
-          <Post/>
-          <Post/>
-          <Post/>
-          <Post/>
+          <FlatList
+            data={storyData}
+            renderItem={renderPost}
+            keyExtractor={(item, index) => index.toString()}
+            showsHorizontalScrollIndicator={false}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
